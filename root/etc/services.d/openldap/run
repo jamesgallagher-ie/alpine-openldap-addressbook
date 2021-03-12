@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+
+# Need to figure out how to run slapd ... I think part of this will be figuring out where the config file will live
