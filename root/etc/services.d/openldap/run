@@ -1,3 +1,29 @@
 #!/usr/bin/with-contenv bash
 
-# Need to figure out how to run slapd ... I think part of this will be figuring out where the config file will live
+# Copying https://github.com/linuxserver/docker-baseimage-alpine-nginx/blob/master/root/etc/services.d/nginx/run
+
+CONFIG_FILE="slapd.conf"
+DEFAULT_CONFIG_PATH="/etc/openldap/"
+CUSTOM_CONFIG_PATH="/config/"
+CONFIG=""
+
+if [ -d $CUSTOM_CONFIG_PATH ] && [ -f $CUSTOM_CONFIG_PATH$CONFIG_FILE ]
+then
+  CONFIG=$CUSTOM_CONFIG_PATH$CONFIG_FILE
+else
+  CONFIG=$DEFAULT_CONFIG_PATH$CONFIG_FILE
+fi
+
+if pgrep -f "[s]lapd:" > /dev/null; then
+  echo "Zombie slapd processes detected, sending SIGTERM"
+  pkill -ef [s]lapd:
+  sleep 1
+fi
+
+if pgrep -f "[s]lapd:" > /dev/null; then
+  echo "Zombie slapd processes still active, sending SIGKILL"
+  pkill -9 -ef [s]lapd:
+  sleep 1
+fi
+
+exec /usr/sbin/slapd -f $CONFIG
