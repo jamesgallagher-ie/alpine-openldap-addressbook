@@ -12,8 +12,9 @@ then
     # If /config exists - make sure there isn't already a slapd.conf.sample - echo info if it does
     if [ ! -f $CONFIG_PATH"/"$CONFIG_FILE".sample" ] 
       then
-        cp $SOURCE_CONIFG_FILE $CONFIG_PATH"/"$CONFIG_FILE".sample"
-        echo "Copied over a sample "$CONFIG_FILE" from "$SOURCE_CONFIG_FILE
+        cp $SOURCE_CONFIG_FILE $CONFIG_PATH"/"$CONFIG_FILE".sample"
+        status=$?
+        [ $status -eq 0 ] && echo "Copied over a sample "$CONFIG_FILE" from "$SOURCE_CONFIG_FILE || echo "Couldn't copy "$SOURCE_CONFIG_FILE" to "$CONFIG_PATH
     fi
   else
     echo "There's already a config file here"
