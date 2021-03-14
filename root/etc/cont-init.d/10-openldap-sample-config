@@ -1,7 +1,23 @@
 #!/usr/bin/with-contenv bash
+CONFIG_PATH="/config"
+CONFIG_FILE="slapd.conf"
+SOURCE_CONFIG_FILE="/etc/openldap/slapd.conf"
 
 # Test to see if /config exists - echo a warning if it doesn't
-
-# If there's a config file already then don't bother creating a sample
-
-# If /config exists - make sure there isn't already a slapd.conf.sample - echo info if it does
+if [ -d $CONFIG_PATH ]
+then
+  # If there's a config file already then don't bother creating a sample
+  if [ ! -f $CONFIG_PATH"/"$CONFIG_FILE ] 
+  then
+    # If /config exists - make sure there isn't already a slapd.conf.sample - echo info if it does
+    if [ ! -f $CONFIG_PATH"/"$CONFIG_FILE".sample" ] 
+      then
+        cp $SOURCE_CONIFG_FILE $CONFIG_PATH"/"$CONFIG_FILE".sample"
+        echo "Copied over a sample "$CONFIG_FILE" from "$SOURCE_CONFIG_FILE
+    fi
+  else
+    echo "There's already a config file here"
+  fi
+else
+  echo "There isn't a "$CONFIG_PATH" directory so won't do anything"
+fi
