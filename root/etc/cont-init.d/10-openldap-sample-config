@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+# Test to see if /config exists - echo a warning if it doesn't
+
+# If there's a config file already then don't bother creating a sample
+
+# If /config exists - make sure there isn't already a slapd.conf.sample - echo info if it does
