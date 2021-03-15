@@ -13,6 +13,7 @@ then
 else
   CONFIG=$DEFAULT_CONFIG_PATH$CONFIG_FILE
 fi
+echo "Using $CONFIG to start slapd"
 
 if pgrep -f "[s]lapd:" > /dev/null; then
   echo "Zombie slapd processes detected, sending SIGTERM"
@@ -26,4 +27,4 @@ if pgrep -f "[s]lapd:" > /dev/null; then
   sleep 1
 fi
 
-exec /usr/sbin/slapd -f $CONFIG
+exec /usr/sbin/slapd -f $CONFIG -d 64
