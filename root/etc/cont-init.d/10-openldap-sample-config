@@ -22,3 +22,13 @@ then
 else
   echo "There isn't a "$CONFIG_PATH" directory so won't do anything"
 fi
+
+# This is an ugly way of doing things but for some reason the run directory was removed as part of Alpine packaging
+# It does seem though that /var/lib/openldap/run is the standard location in slapd.conf and slapd won't start if it can't write there
+# So I'm creating run - ideally I'd read the configuration file but I'm lazy and just want to get the address book working so might just
+# call this technical debt and deal with it later
+
+if [ ! -d /var/lib/openldap/run ]
+then
+  mkdir /var/lib/openldap/run
+fi
